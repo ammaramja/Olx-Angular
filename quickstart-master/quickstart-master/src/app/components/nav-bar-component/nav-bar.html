@@ -1,0 +1,198 @@
+<div class="container-fluid" style="padding-left: 0;padding-right: 0">
+    <nav class="navbar navbar-default navbar-fixed-top" style="background-color: #3C3C3D;color: white;font-family: Verdana;margin-bottom: 0">
+        <div class="navbar-header" style="padding-right: 15px">
+            <img src="olx.png" class="img-circle" style="width: 50px;height: 50px"> Seller meets buyer
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-left">
+                <li><a routerLink="" routerLinkActive="active">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Shop by category <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li *ngFor="let category of categories"><a role="button" (click)="searchByCategory(category)">{{category.name}}</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+
+                <li><a role="button" (click)="login_check_for_post()">Post Ad!</a></li>
+                <!-- <li><a routerLink="/postAd" routerLinkActive="active">Post Ad!</a></li> -->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li *ngIf="!isLoggedIn"><a href="#myModal" id="signIn" role="button" data-target="#myModal" data-toggle="modal">Sign In!</a></li>
+                        <li *ngIf="!isLoggedIn"><a href="#myModal2" role="button" data-target="#myModal2" data-toggle="modal">Sign Up!</a></li>
+                        <li *ngIf="isLoggedIn"><a role="button" (click)="display_user_profile()">My Profile!</a></li>
+                        <li *ngIf="isLoggedIn"><a role="button" (click)="signout_user()">Sign Out!</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+
+
+<!--Sign in and sign up modal -->
+<form #SignInForm="ngForm" class="form-horizontal" novalidate>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" id="dismissLogin" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                    <h4 class="modal-title" id="myModalLabel">Sign-In form</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <div class="input-group pb-modalreglog-input-group">
+                            <input type="text" name="s1" class="form-control" id="usernameSignin" #usernameSignin placeholder="Username" required minlength="3"
+                                #uNameModelRef="ngModel" ngModel>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                        </div>
+                        <div *ngIf="uNameModelRef.errors && uNameModelRef.touched" class="alert alert-danger">
+                            <div [hidden]="!uNameModelRef.errors.required"> Username required! </div>
+                            <div [hidden]="!uNameModelRef.errors.minlength"> Length of username should be minimum of 3 characters </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-group pb-modalreglog-input-group">
+                            <input type="password" name="s2" class="form-control" id="pwdSignin" #pwdSignin placeholder="Password" required minlength="5"
+                                #passwdModelRef="ngModel" ngModel>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+
+                        </div>
+                        <div *ngIf="passwdModelRef.errors && passwdModelRef.touched" class="alert alert-danger">
+                            <div [hidden]="!passwdModelRef.errors.required"> Password required! </div>
+                            <div [hidden]="!passwdModelRef.errors.minlength"> Length of pasword should be minimum 5 characters </div>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="alert alert-success" *ngIf="showSignInSuccess">SignIn Successful!
+                            <br><br> You'll be Redirected in 3 seconds!
+                        </p>
+                        <p class="alert alert-danger" *ngIf="showSignInError">Invalid Credentials!
+                        </p>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button [disabled]="!SignInForm.form.valid" type="button" class="btn btn-primary" (click)="SignIn(usernameSignin,pwdSignin)">Sign-In</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form #SignUpForm="ngForm" class="form-horizontal" novalidate id="RegisterForm">
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                    <h4 class="modal-title" id="myModalLabel">Registration form</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <div id="pb-modalreglog-progressbar"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Firstname">First name</label>
+                        <div class="input-group pb-modalreglog-input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                            <input type="text" class="form-control" #Firstname placeholder="First name" required minlength="3" #registredField1="ngModel"
+                                ngModel name="registred_field1">
+                        </div>
+                        <div *ngIf="registredField1.errors && registredField1.touched" class="alert alert-danger">
+                            <div [hidden]="!registredField1.errors.required"> Required! </div>
+                            <div [hidden]="!registredField1.errors.minlength"> Minimum Length: 3 characters </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Lastname">Last Name</label>
+                        <div class="input-group pb-modalreglog-input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                            <input type="text" class="form-control" #Lastname placeholder="Last Name" required minlength="3" #registredField2="ngModel"
+                                ngModel name="registred_field2">
+                        </div>
+                        <div *ngIf="registredField2.errors && registredField2.touched" class="alert alert-danger">
+                            <div [hidden]="!registredField2.errors.required"> Required! </div>
+                            <div [hidden]="!registredField2.errors.minlength"> Minimum Length: 3 characters </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Username">Username</label>
+                        <div class="input-group pb-modalreglog-input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                            <input type="text" class="form-control" #Username placeholder="Username" required minlength="3" #registredField3="ngModel"
+                                ngModel name="registred_field3">
+                        </div>
+                        <div *ngIf="registredField3.errors && registredField3.touched" class="alert alert-danger">
+                            <div [hidden]="!registredField3.errors.required"> Required! </div>
+                            <div [hidden]="!registredField3.errors.minlength"> Minimum Length: 3 characters </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-group pb-modalreglog-input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                            <input type="password" class="form-control" #Pwd placeholder="Password" required minlength="3" #registredField4="ngModel"
+                                ngModel name="registred_field4">
+                        </div>
+                        <div *ngIf="registredField4.errors && registredField4.touched" class="alert alert-danger">
+                            <div [hidden]="!registredField4.errors.required"> Required! </div>
+                            <div [hidden]="!registredField4.errors.minlength"> Minimum Length: 3 characters </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <div class="input-group pb-modalreglog-input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                            <input type="email" class="form-control" #Email placeholder="Email" required minlength="3" #registredField5="ngModel" ngModel
+                                name="registred_field5">
+                        </div>
+                        <div *ngIf="registredField5.errors && registredField5.touched" class="alert alert-danger">
+                            <div [hidden]="!registredField5.errors.required"> Required! </div>
+                            <div [hidden]="!registredField5.errors.minlength"> Minimum Length: 3 characters </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone_number">Phone Number</label>
+                        <div class="input-group pb-modalreglog-input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
+                            <input type="text" class="form-control" #Phone placeholder="Phone Number" required minlength="3" #registredField6="ngModel"
+                                ngModel name="registred_field6">
+                        </div>
+                        <div *ngIf="registredField6.errors && registredField6.touched" class="alert alert-danger">
+                            <div [hidden]="!registredField6.errors.required"> Required! </div>
+                            <div [hidden]="!registredField6.errors.minlength"> Minimum Length: 3 characters </div>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="alert alert-success" *ngIf="showSignIn">SignUp Successful!
+                            <br> Click Sign In!
+                        </p>
+                        <p class="alert alert-danger" *ngIf="showSignupError">User already exists!
+                        </p>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="dismissRegisterForm" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button *ngIf="!showSignIn" [disabled]="!SignUpForm.form.valid" type="submit" class="btn btn-primary" (click)="SignUp(Firstname,Lastname,Username,Pwd,Email,Phone)">Sign up</button>
+                    <button *ngIf="showSignIn" type="button" class="btn btn-success" (click)="redirectToSignInModal()">Sign In!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

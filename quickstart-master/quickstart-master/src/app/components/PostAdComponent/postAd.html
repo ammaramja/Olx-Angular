@@ -1,0 +1,62 @@
+<br>
+<h2 style="font-family:roboto;font-size:300%;font-weight:800;margin-left:520px">Submit a free Ad
+</h2>
+<br>
+<br>
+<div class="container-fluid">
+    <form #AdForm="ngForm" class="form-horizontal" novalidate>
+        <fieldset>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="Ad Title">Ad Title*</label>
+                <div class="col-md-4">
+                    <input id="Ad Title" name="Ad Title" type="text" placeholder="Attractive title" class="form-control input-md" required minlength="3" #titleModelRef="ngModel" ngModel>
+                    <div *ngIf="titleModelRef.errors && titleModelRef.touched" class="alert alert-danger">
+                        <div [hidden]="!titleModelRef.errors.required"> Please enter title of Ad! </div>
+                        <div [hidden]="!titleModelRef.errors.minlength"> Length of title should be minimum 3 characters </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="textinput_name">Name*</label>
+                <div class="col-md-4">
+                    <input id="textinput_name" name="textinput_name" type="text" placeholder="" class="form-control input-md" #nameModelRef="ngModel" required minlength="3" ngModel>
+                    <div *ngIf="nameModelRef.errors && nameModelRef.touched" class="alert alert-danger">
+                        <div [hidden]="!nameModelRef.errors.required"> Please enter your name </div>
+                        <div [hidden]="!nameModelRef.errors.minlength"> Name length should be minimum 3 characters </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="selectbasic">Categories*</label>
+                <div class="col-md-4">
+                    <select id="selectbasic" name="selectbasic" class="input-xlarge form-control" #categoryRef>
+                <option *ngFor="let category of categories">{{category.name}}</option>
+            </select>
+                </div>
+            </div>
+
+
+            <!-- Textarea -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="textarea">Ad description*</label>
+                <div class="col-md-4">
+                    <textarea class="form-control" id="textarea" name="textarea" required minlength="5" #descModelRef="ngModel" ngModel></textarea>
+                    <div *ngIf="descModelRef.errors && descModelRef.touched" class="alert alert-danger">
+                        <div [hidden]="!descModelRef.errors.required"> Please enter description </div>
+                        <div [hidden]="!descModelRef.errors.minlength">Length should be minimum 5 characters </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="form-group">
+                <button [disabled]="!AdForm.form.valid" type="submit" name="singlebutton" class="btn btn-primary" (click)="postNewad(titleModelRef.value,nameModelRef.value,categoryRef.value,descModelRef.value)" id="postBtn">POST</button>
+            </div>
+
+        </fieldset>
+
+    </form>
+</div>

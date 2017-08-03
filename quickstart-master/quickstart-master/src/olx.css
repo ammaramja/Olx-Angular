@@ -1,0 +1,87 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto);
+body
+{
+	padding-top: 50px;
+    background-color: #D4DFC7;
+}
+
+.carousells{
+width: auto;
+  height: 400px;
+  max-height: 400px;
+}
+.alert{
+    text-align: center;
+}
+#categ_r{
+    padding-left: 100px;
+}
+img{
+    width: 200px;
+    height: 200px;
+}
+.center-img{
+ width: 150px;
+    height: 150px;   
+}
+.navbar-header .navbar-brand{
+	color:red;
+	font-family: Verdana;
+}
+.navbar-default .navbar-nav > li > a{
+color: white;
+font-family: roboto;
+
+
+}
+#postBtn{
+    margin-left: 635px;
+}
+.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+    color : white;
+    background-color: transparent;
+}
+
+.navbar-default .navbar-nav > li > a:visited{
+    color: white;
+}
+
+.navbar-default .navbar-nav > li > a:active{
+color: blue;
+background-color: white;
+}
+.pb-modalreglog-container
+    {
+        margin-top: 100px;
+    }
+
+    .pb-modalreglog-legend
+    {
+        text-align: center;
+    }
+
+    .pb-modalreglog-input-group
+    {
+        margin: auto;
+    }
+
+    .pb-modalreglog-submit
+    {
+        margin-left: 5px;
+    }
+
+    .pb-modalreglog-form-reg
+    {
+        text-align: center;
+    }
+
+    .pb-modalreglog-footer p
+    {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    #pb-modalreglog-progressbar
+    {
+        border-radius: 2px;
+    }

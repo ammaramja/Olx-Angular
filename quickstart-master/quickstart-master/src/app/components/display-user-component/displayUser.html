@@ -1,0 +1,36 @@
+<div class="row">
+	<div class="col-md-4" style="padding-left: 200px;padding-top: 50px;">
+	<img src="mypic53.jpg" class="img-rounded">
+	</div>
+
+	<div class="col-md-8" style="padding-top: 25px;">
+		<h1>{{FullName}}</h1>
+		<br>
+		<h4>UserName : {{userName}}</h4>
+		<h4>Phone: {{phone}}</h4>
+		<h4><a [href]="mailTo">{{email}}</a></h4>
+		<h4>
+		<p><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></p>
+		</h4>
+	</div>
+</div>
+<br>
+<br>
+<h2 *ngIf="userAdsExists" style="margin-left:200px;">Ads by me:</h2>
+<br>
+<div class="row" *ngFor="let ads of temp_var">
+	<div class="col-md-4" style="padding-left: 200px;padding-top: 50px;">
+	<img src="buyme.png" class="img-rounded">
+	</div>
+
+	<div class="col-md-8" style="padding-top: 25px;">
+		<h1>{{ads.title}}</h1>
+		<br>
+		<h4>Category: {{ads.category}}</h4>
+    <br>
+    <h4>Posted by: {{ads.name}}</h4>
+    <br>
+		<h4>Description: {{ads.description}}</h4>
+		
+	</div>
+</div>
