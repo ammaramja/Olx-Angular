@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 export class NavBarComponent {
 
   categories: Array<any> = [];
-  registerObj: Object;
+  registerObj: any;
   signInObj: Object;
   showSignIn: boolean = false;
   showSignupError: boolean = false;
@@ -53,7 +53,7 @@ export class NavBarComponent {
 
   redirectToSignInModal() {
     document.getElementById('dismissRegisterForm').click();
-    document.getElementById('RegisterForm').reset();
+    (<HTMLFormElement>document.getElementById('RegisterForm')).reset();
     document.getElementById('signIn').click();
     this.showSignIn = false;
     this.showSignupError = false;
@@ -61,8 +61,8 @@ export class NavBarComponent {
 
   RedirectFromLogin() {
     document.getElementById('dismissLogin').click();
-    document.getElementById('usernameSignin').value = "";
-    document.getElementById('pwdSignin').value = "";
+    (<HTMLInputElement>document.getElementById('usernameSignin')).value = "";
+    (<HTMLInputElement>document.getElementById('pwdSignin')).value = "";
     this.showSignIn = false;
     this.showSignupError = false;
     this.myRouter.navigate(['displayUser']);
